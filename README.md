@@ -1,3 +1,6 @@
+<img width="2041" height="930" alt="NotebookLM Mind Map" src="https://github.com/user-attachments/assets/489eda06-36cc-45ac-bac0-dbe08a596a1b" />
+[Guia Prático_ Como Construir o Seu Primeiro Assistente de IA com Memória e RAG no n8n.pdf](https://github.com/user-attachments/files/33127534/Guia.Pratico_.Como.Construir.o.Seu.Primeiro.Assistente.de.IA.com.Memoria.e.RAG.no.n8n.pdf)
+
 # Mastering-n8n-Nodes-and-Workflows
 Objetivo de estudo, tema:
 Conhecendo principais nodes e automação com n8n - o objetivo é aprender a utilizar os principais nodes e como integrar 
