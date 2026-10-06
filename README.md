@@ -33,7 +33,47 @@ As perguntas que você fez, o que ele respondeu e de quais fontes;
 me informe os principais nodes utilizados para implementação de automação de 
 whatsapp utilizados em clinicas de odontologia, nutrição e psicologia, como forma de agendamento de consultas
 
-resposta: Para estruturar uma automação robusta de agendamento de consultas via WhatsApp em clínicas de Odontologia, Nutrição e Psicologia, o n8n utiliza um conjunto de nodes estratégicos divididos entre captura, inteligência, lógica e integração.Abaixo estão os principais nodes necessários para construir essa automação end-to-end:1. Entrada e Gatilhos (Triggers)Webhook: Funciona como a "porta de entrada" ou campainha da automação12. É o nó que escuta e recebe em tempo real as mensagens enviadas pelos pacientes através do WhatsApp ou de formulários do site da clínica1more_horiz.Schedule Trigger: Funciona como um temporizador ou despertador programado24. É fundamental para fluxos ativos de lembretes de consulta e confirmações prévias45. Ele dispara mensagens automáticas (ex: 24h ou 2h antes do atendimento) para reduzir a taxa de absenteísmo nas consultas odontológicas, nutricionais ou psicológicas45.2. Comunicação com o WhatsAppEvolution API (Community Node): Nó da comunidade (n8n-nodes-evolution-api)6 que facilita o envio e o recebimento de mensagens de texto, áudios e arquivos no WhatsApp sem a necessidade de montar requisições manuais complexas78.HTTP Request: Atua como o "mensageiro" da automação para conversar com APIs externas910. Caso não utilize um nó de comunidade, o HTTP Request é configurado para realizar as chamadas para a API do WhatsApp ou para a API do sistema de prontuário/gestão da clínica9more_horiz.3. Inteligência Artificial e Tomada de DecisãoAI Agent: Atua como o "cérebro" do fluxo13. Em clínicas médicas, ele é configurado com modelos de linguagem (como OpenAI) para interpretar mensagens em linguagem natural1314. Ele entende a intenção do paciente (agendar, remarcar, tirar dúvidas sobre convênios ou procedimentos), mantém a memória do histórico do diálogo14 e executa ferramentas (tools) para interagir com a agenda1415.Switch: Permite rotear o fluxo em múltiplos caminhos1617. É ideal para categorizar o atendimento por tipo de mensagem (texto, áudio, foto de documento)1618 ou triar a especialidade desejada na clínica (ex: Rota 1 = Odontologia, Rota 2 = Nutrição, Rota 3 = Psicologia)16more_horiz.If: Avalia decisões binárias de sim ou não1720. Por exemplo: verificar se o paciente já possui cadastro prévio no sistema ou se um horário solicitado está disponível17more_horiz.4. Organização de Dados e AgendamentoEdit Fields (Set): O "organizador" de dados da automação22. É usado para limpar, padronizar e renomear as informações extraídas do paciente (como nome completo, CPF, telefone e o horário pretendido) antes de enviá-las para os próximos passos22more_horiz.Google Calendar / Google Sheets: Utilizados para consultar a disponibilidade de horários dos profissionais da clínica, gravar o novo agendamento e manter um registro centralizado das consultas1525.Code (JavaScript/Python): Utilizado quando é necessário criar lógicas personalizadas de manipulação de datas, calcular intervalos entre consultas ou formatar fusos horários específicos dos profissionais13more_horiz.Exemplo de Lógica do Fluxo de AgendamentoRecepção: O paciente envia uma mensagem no WhatsApp $\rightarrow$ O Webhook aciona o fluxo12.Triagem: O Switch identifica o tipo de mensagem1618 e o AI Agent qualifica a necessidade do paciente (agendamento para Nutrição, Psicologia ou Odontologia)1314.Consulta de Agenda: O AI Agent consulta as vagas disponíveis na agenda (via Google Calendar ou HTTP Request)12more_horiz.Confirmação e Cadastro: O Edit Fields organiza os dados pessoais2224, o horário é reservado, e a Evolution API envia a mensagem de confirmação com as orientações pré-consulta ao paciente78.Lembrete Automático: O Schedule Trigger roda diariamente para buscar as consultas do dia seguinte e disparar o lembrete de confirmação via WhatsApp
+resposta: Para estruturar uma automação robusta de agendamento de consultas via WhatsApp em clínicas de **Odontologia, Nutrição e Psicologia**, o n8n utiliza um conjunto de nodes estratégicos divididos entre captura, inteligência, lógica e integração. 
+
+Abaixo estão os principais nodes necessários para construir essa automação end-to-end:
+
+---
+
+### 1. Entrada e Gatilhos (Triggers)
+* **Webhook**: Funciona como a "porta de entrada" ou campainha da automação. É o nó que escuta e recebe em tempo real as mensagens enviadas pelos pacientes através do WhatsApp ou de formulários do site da clínica.
+* **Schedule Trigger**: Funciona como um temporizador ou despertador programado. É fundamental para fluxos ativos de **lembretes de consulta** e **confirmações prévias**. Ele dispara mensagens automáticas (ex: 24h ou 2h antes do atendimento) para reduzir a taxa de absenteísmo nas consultas odontológicas, nutricionais ou psicológicas.
+
+---
+
+### 2. Comunicação com o WhatsApp
+* **Evolution API (Community Node)**: Nó da comunidade (`n8n-nodes-evolution-api`) que facilita o envio e o recebimento de mensagens de texto, áudios e arquivos no WhatsApp sem a necessidade de montar requisições manuais complexas.
+* **HTTP Request**: Atua como o "mensageiro" da automação para conversar com APIs externas. Caso não utilize um nó de comunidade, o HTTP Request é configurado para realizar as chamadas para a API do WhatsApp ou para a API do sistema de prontuário/gestão da clínica.
+
+---
+
+### 3. Inteligência Artificial e Tomada de Decisão
+* **AI Agent**: Atua como o "cérebro" do fluxo. Em clínicas médicas, ele é configurado com modelos de linguagem (como OpenAI) para interpretar mensagens em linguagem natural. Ele entende a intenção do paciente (agendar, remarcar, tirar dúvidas sobre convênios ou procedimentos), mantém a memória do histórico do diálogo e executa ferramentas (*tools*) para interagir com a agenda.
+* **Switch**: Permite rotear o fluxo em múltiplos caminhos. É ideal para categorizar o atendimento por tipo de mensagem (texto, áudio, foto de documento) ou triar a especialidade desejada na clínica (ex: Rota 1 = Odontologia, Rota 2 = Nutrição, Rota 3 = Psicologia).
+* **If**: Avalia decisões binárias de sim ou não. Por exemplo: verificar se o paciente já possui cadastro prévio no sistema ou se um horário solicitado está disponível.
+
+---
+
+### 4. Organização de Dados e Agendamento
+* **Edit Fields (Set)**: O "organizador" de dados da automação. É usado para limpar, padronizar e renomear as informações extraídas do paciente (como nome completo, CPF, telefone e o horário pretendido) antes de enviá-las para os próximos passos.
+* **Google Calendar / Google Sheets**: Utilizados para consultar a disponibilidade de horários dos profissionais da clínica, gravar o novo agendamento e manter um registro centralizado das consultas.
+* **Code (JavaScript/Python)**: Utilizado quando é necessário criar lógicas personalizadas de manipulação de datas, calcular intervalos entre consultas ou formatar fusos horários específicos dos profissionais.
+
+---
+
+### Exemplo de Lógica do Fluxo de Agendamento
+
+1. **Recepção**: O paciente envia uma mensagem no WhatsApp \\(\rightarrow\\) O **Webhook** aciona o fluxo.
+2. **Triagem**: O **Switch** identifica o tipo de mensagem e o **AI Agent** qualifica a necessidade do paciente (agendamento para Nutrição, Psicologia ou Odontologia).
+3. **Consulta de Agenda**: O **AI Agent** consulta as vagas disponíveis na agenda (via **Google Calendar** ou **HTTP Request**).
+4. **Confirmação e Cadastro**: O **Edit Fields** organiza os dados pessoais, o horário é reservado, e a **Evolution API** envia a mensagem de confirmação com as orientações pré-consulta ao paciente.
+5. **Lembrete Automático**: O **Schedule Trigger** roda diariamente para buscar as consultas do dia seguinte e disparar o lembrete de confirmação via WhatsApp.
+
+💡 *Se desejar, posso desenhar um passo a passo do prompt do AI Agent ou mostrar como estruturar a requisição para a agenda da clínica.*
 
 pergunta 2
 como iniciar o workflow com o trigger e posteriormente utilizar o fluxo para agendamento automatico na planilha google e confirmação de agendamento no whatsapp do paciente, logo após isso inserindo o dado de data e hora do agendamento no calendario google
